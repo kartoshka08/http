@@ -29,7 +29,9 @@ public class CloseableHttpClient {
         Arrays.stream(response.getAllHeaders()).forEach(System.out::println);
         List<PostJava> posts = mapper.readValue(response.getEntity().getContent(), new TypeReference<List<PostJava>>() {
         });
-        posts.forEach(System.out::println);
+        posts.stream()
+                .filter(value -> value.getUpvotes() != 0 && value.getUpvotes() > 0)
+                .forEach(System.out::println);
     }
 
     public static ObjectMapper mapper = new ObjectMapper();
